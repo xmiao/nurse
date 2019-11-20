@@ -12,6 +12,27 @@ code {
     monospace;
 }
 
+.App {
+    display: flex;
+    flex-direction: column;
+}
+
+.cn1 {
+    display: flex;
+    flex: 1 1 auto;
+    position: relative;
+    flex-direction: column;
+}
+
+.overlay {
+    flex: 1 1 auto;
+    outline: none;
+}
+
+.tab {
+    margin: 3px;
+}
+
 .full {
     position: absolute;
     top: 0;
@@ -26,10 +47,19 @@ table {
     width: 100%;
 }
 
+.active {
+    background: rgba(252, 179, 135, 0.5) !important;
+    border: 1px solid blue !important;
+}
+
+tr {
+    border: 1px solid transparent;
+}
+
 th {
     background: lightblue;
 }
 
-tbody:nth-child(odd) {
-    background: aliceblue;
+tbody tr:nth-child(odd) {
+    background: rgba(211, 211, 211, 0.42);
 }

@@ -3,8 +3,10 @@ import './App.css';
 
 const App: React.FC = () => {
     const [voiceCommand, setCommand] = useState("");
-    const [elem, setElem] = useState(null);
   const [ptData, setPtData] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", 7: "", 8: ""} as any);
+  const [activeLine, setActiveLine] = useState("");
+  const [cnt, refresh] = useState(0);
+
 
     function doInput(event: any) {
       let v = event.target.innerText;
@@ -20,7 +22,7 @@ const App: React.FC = () => {
         [/五/g, 5],
         [/六/g, 6],
         [/七/g, 7],
-        [/八"/g, 8],
+        [/八/g, 8],
         [/九/g, 9],
         [/十/g, 0]
       ];
@@ -32,21 +34,22 @@ const App: React.FC = () => {
       let [all, bed, temp] = v.match(/([\d\w]+)[^\d]([\d.]+)/) || [];
       if (!all) return;
 
-      // setPtData([...ptData, [bed, temp]]);
       ptData[bed] = temp;
-      // setPtData({});
+      setActiveLine(bed);
       setPtData(ptData);
       setCommand("");
+      refresh(cnt + 1);
     }
 
-  function simulate() {
-    doInput({target: {innerText: "some test"}})
+  function simulate(cmd: string) {
+    doInput({target: {innerText: cmd}})
   }
 
     return (
         <div className="App">
-          <div className="full" style={{padding: "1em"}}>
-                <div>
+          <div className="cn1">
+            <h4>患者血压录入</h4>
+            <div className="tab">
                     <table>
                         <thead>
                         <tr>
@@ -59,28 +62,29 @@ const App: React.FC = () => {
                         {Object.keys(ptData)
                             .map((bed: any) => {
                               let temp = ptData[bed];
-                              return <tr>
+                              return <tr key={`bed-${bed}:${temp}`} className={+activeLine === +bed ? "active" : ""}>
                                 <td style={{fontWeight: "bold"}}>{bed}</td>
-                                <td>{temp}</td>
+                                <td key={`temp${temp}`}>{temp}</td>
                               </tr>;
                             })}
                         </tbody>
                     </table>
-                  {voiceCommand}
-
                 </div>
-            </div>
-          <div ref={(e: any) => setElem(e)} contentEditable={true} className="full"
-               style={{
-                 display: "flex",
-                 alignItems: "flex-end",
-                 outline: "none"
-               }}
-               tabIndex={1}
-               onInput={doInput}/>
-          <button onClick={simulate}>
-            some
-          </button>
+            <div contentEditable={true}
+                 className="overlay full"
+                 tabIndex={1}
+                 onInput={doInput}/>
+          </div>
+          <div>
+            {voiceCommand}
+            {["3床5好", "3床70都"]
+                .map((x) => {
+                  return <button key={`${x}`} style={{margin: "3px"}} onClick={() => simulate(x)}>
+                    {x}
+                  </button>;
+                })}
+          </div>
+
         </div>
     );
 };
