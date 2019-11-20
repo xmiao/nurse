@@ -13,10 +13,10 @@ code {
 }
 
 .full {
-    border: 2px solid red;
     position: absolute;
     top: 0;
-    bottom: 0;
+    height: 2in;
+    /*bottom: 3in;*/
     left: 0;
     right: 0;
 }
