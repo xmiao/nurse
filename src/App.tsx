@@ -39,6 +39,10 @@ const App: React.FC = () => {
       setCommand("");
     }
 
+  function simulate() {
+    doInput({target: {innerText: "some test"}})
+  }
+
     return (
         <div className="App">
           <div className="full" style={{padding: "1em"}}>
@@ -73,9 +77,10 @@ const App: React.FC = () => {
                  outline: "none"
                }}
                tabIndex={1}
-               onInput={doInput}>
-            </div>
-
+               onInput={doInput}/>
+          <button onClick={simulate}>
+            some
+          </button>
         </div>
     );
 };
