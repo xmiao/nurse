@@ -2,7 +2,7 @@
   "name": "nurse",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://miaoxj.github.io/nurse",
+  "homepage": "http://xmiao.github.io/nurse",
   "dependencies": {
     "@types/jest": "24.0.23",
     "@types/node": "12.12.11",
