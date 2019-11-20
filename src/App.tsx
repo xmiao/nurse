@@ -4,11 +4,13 @@ import './App.css';
 const App: React.FC = () => {
     const [voiceCommand, setCommand] = useState("");
     const [elem, setElem] = useState(null);
-  const [ptData, setPtData] = useState({} as any);
+  const [ptData, setPtData] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", 7: "", 8: ""} as any);
 
     function doInput(event: any) {
       let v = event.target.innerText;
       if (!v) return;
+      event.target.innerText = "";
+
       setCommand(voiceCommand + v);
       const map = [
         [/一/g, 1],
@@ -27,55 +29,53 @@ const App: React.FC = () => {
         v = v.replace(rpl, '' + val);
       }
 
-      let [all, bed, temp] = v.match(/([\d\w]+)[^\d]+([\d.]+)/) || [];
+      let [all, bed, temp] = v.match(/([\d\w]+)[^\d]([\d.]+)/) || [];
       if (!all) return;
 
       // setPtData([...ptData, [bed, temp]]);
       ptData[bed] = temp;
+      // setPtData({});
       setPtData(ptData);
       setCommand("");
-
-        if (elem) {
-            // @ts-ignore
-          elem.innerText = "";
-        }
     }
 
     return (
         <div className="App">
-          <div className="full" style={{border: "10px solid red"}}>
-                {voiceCommand}
+          <div className="full" style={{padding: "1em"}}>
                 <div>
                     <table>
                         <thead>
-                        <th>
-                            <td>床位号</td>
-                            <td>Temp</td>
-                        </th>
+                        <tr>
+                          <th>床位号</th>
+                          <th>Temp</th>
+                        </tr>
                         </thead>
                         <tbody>
+
                         {Object.keys(ptData)
                             .map((bed: any) => {
                               let temp = ptData[bed];
                               return <tr>
-                                <td>{bed}</td>
+                                <td style={{fontWeight: "bold"}}>{bed}</td>
                                 <td>{temp}</td>
                               </tr>;
                             })}
                         </tbody>
                     </table>
+                  {voiceCommand}
+
                 </div>
             </div>
           <div ref={(e: any) => setElem(e)} contentEditable={true} className="full"
                style={{
-                 border: "5px solid blue", display: "flex",
-                 alignItems: "flex-end"
+                 display: "flex",
+                 alignItems: "flex-end",
+                 outline: "none"
+
                }}
                tabIndex={1}
                onInput={doInput}>
-
             </div>
-
         </div>
     );
 };

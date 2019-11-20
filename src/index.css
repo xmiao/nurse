@@ -15,8 +15,21 @@ code {
 .full {
     position: absolute;
     top: 0;
-    height: 2in;
+    height: 3in;
     /*bottom: 3in;*/
     left: 0;
     right: 0;
+}
+
+table {
+    border: 3px solid lightblue;
+    width: 100%;
+}
+
+th {
+    background: lightblue;
+}
+
+tbody:nth-child(odd) {
+    background: aliceblue;
 }
